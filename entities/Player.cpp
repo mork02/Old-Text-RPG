@@ -285,7 +285,7 @@ void Player::clearFile() {
 // IMPORT THIS INTO THE MAINFILE TO GET THE UPDATED PLAYER STATS
 // NOW IT TAKES THE START STATS
 
-void Player::saveGame() {
+/*void Player::saveGame() {
     std::ofstream file("saveGame.txt");
 
     if (file.is_open()) {
@@ -338,3 +338,4 @@ bool Player::loadGame() {
         return false;
     }
 }
+*/

@@ -209,13 +209,13 @@ int main() {
             Sleep(1500);
         // Load game
         } else if (selectedOption  == 2) {
-            bool x = user.loadGame();
-            if (x) {
+           // bool x = user.loadGame();
+            //if (x) {
                 start_screen = false;
                 in_town = true;
                 first_time_healer = false;
                 first_time_smith = false;
-            }
+            //}
             pressEnterToContinue();
         // Quit
         } else if (selectedOption  == 3) {
@@ -1275,7 +1275,7 @@ int main() {
                     }
                 } else if (selectedOption == 3) {
                     user.clearFile();
-                    user.saveGame();
+                    // user.saveGame();
                     pressEnterToContinue(); 
                 } else if (selectedOption == 4) {
                     break;

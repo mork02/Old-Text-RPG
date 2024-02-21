@@ -45,8 +45,8 @@ public:
     void reduce_armorn_durability();
     Item* unequipWeapon();
     Item* unequipArmor();
-    void saveGame();
-    bool loadGame();
+    // void saveGame();
+    // bool loadGame();
     void clearFile();
 
     Player() : 
