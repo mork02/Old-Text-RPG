@@ -51,6 +51,8 @@ public:
     Item* unequipWeapon();
     Item* unequipArmor();
     bool loadGame();
+    void saveGame();
+    void clearFile();
 
     Player() : 
         name("None"),

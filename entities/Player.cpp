@@ -282,13 +282,15 @@ bool Player::loadGame() {
     std::ifstream file("saveGame.txt");
 
     if (file.is_open() && file.peek() != std::ifstream::traits_type::eof()) {
-        file >> name;
+        std::getline(file, name);
         file >> hp >> max_hp;
         file >> level >> exp;
-        file >> weapon_slot;
+        file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::getline(file, weapon_slot);
         file >> weapon_id >> weapon_price >> weapon_durability >> max_weapon_durability;
         file >> normal_damage >> weapon_damage >> armor_damage;
-        file >> armor_slot;
+        file.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::getline(file, armor_slot);
         file >> armor_id >> armor_price >> armor_durability >> max_armor_durability;
         file >> normal_defense >> armor_defensiv >> weapon_defense;
         file >> gold_amount;
@@ -306,3 +308,33 @@ bool Player::loadGame() {
     }
 }
 
+void Player::saveGame() {
+    std::ofstream file("saveGame.txt");
+
+    if (file.is_open()) {
+        file << return_username() << std::endl;
+        file << return_hp() << " " << return_max_hp() << std::endl;
+        file << return_lvl() << " " << return_exp() << std::endl;
+        file << return_weapon_slot() << std::endl;
+        file << return_weaponID() << " " << return_weaponPrice() << " " << return_Weapondurability() << " " << return_MaxWeapondurability() << std::endl;
+        file << return_damage() << " " << return_weaponDMG() << " " << return_armorDMG() << std::endl;
+        file << return_armor_slot() << std::endl;
+        file << return_armorID() << " " << return_armorPrice() << " " << return_Armordurability() << " " << return_MaxArmordurability() << std::endl;
+        file << return_defense() << " " << return_armorDEF() << " " << return_weaponDEF() << std::endl;
+        file << return_gold() << std::endl;
+        file << getMagicShieldDuration() << std::endl;
+        file << getMagicShieldUses() << std::endl;
+        file << getMagicShieldActiv() << std::endl;
+        file << return_lifes() << std::endl;
+
+        file.close();
+        std::cout << "Game saved successfully." << std::endl;
+    } else {
+        std::cerr << "Error: Unable to save game data to file." << std::endl;
+    }
+}
+
+void Player::clearFile() {
+    std::ofstream file("saveGame.txt", std::ofstream::out | std::ofstream::trunc);
+    file.close();
+}
