@@ -210,12 +210,12 @@ int main() {
         // Load game
         } else if (selectedOption  == 2) {
            // bool x = user.loadGame();
-            //if (x) {
+            // if (x) {
                 start_screen = false;
                 in_town = true;
                 first_time_healer = false;
                 first_time_smith = false;
-            //}
+            // }
             pressEnterToContinue();
         // Quit
         } else if (selectedOption  == 3) {
