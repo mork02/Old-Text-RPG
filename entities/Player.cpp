@@ -1,6 +1,7 @@
 #include "Player.h"
 #include <string>
 #include <cmath>
+#include <fstream>
 
 bool name__ = false;
 
@@ -277,40 +278,6 @@ Item* Player::unequipArmor() {
         return armor;
 }
 
-void Player::clearFile() {
-    std::ofstream file("saveGame.txt", std::ofstream::out | std::ofstream::trunc);
-    file.close();
-}
-
-// IMPORT THIS INTO THE MAINFILE TO GET THE UPDATED PLAYER STATS
-// NOW IT TAKES THE START STATS
-
-/*void Player::saveGame() {
-    std::ofstream file("saveGame.txt");
-
-    if (file.is_open()) {
-        file << name << std::endl;
-        file << hp << " " << max_hp<< std::endl;
-        file << level << " " << exp << std::endl;
-        file << weapon_slot << std::endl;
-        file << weapon_id << " " << weapon_price << " " << weapon_durability << " " << max_weapon_durability << std::endl;
-        file << normal_damage << " " << weapon_damage << " " << armor_damage << std::endl;
-        file << armor_slot << std::endl;
-        file << armor_id << " " << armor_price<< " " << armor_durability << " " << max_armor_durability << std::endl;
-        file << normal_defense << " " << armor_defensiv << " " << weapon_defense << std::endl;
-        file << gold_amount << std::endl;
-        file << magicShieldDuration << std::endl;
-        file << magicShieldUses << std::endl;
-        file << magicShieldActiv << std::endl;
-        file << lifes << std::endl;
-
-        file.close();
-        std::cout << "Game saved successfully." << std::endl;
-    } else {
-        std::cerr << "Error: Unable to save game data to file." << std::endl;
-    }
-}
-
 bool Player::loadGame() {
     std::ifstream file("saveGame.txt");
 
@@ -338,4 +305,4 @@ bool Player::loadGame() {
         return false;
     }
 }
-*/
+

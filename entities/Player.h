@@ -1,6 +1,5 @@
 #pragma once
 #include <iostream>
-#include <fstream>
 #include "stats/Health.h"
 #include "stats/Damage.h"
 #include "stats/Defense.h"
@@ -29,6 +28,12 @@ public:
     int return_MaxWeapondurability() { return max_weapon_durability; }
     int return_Armordurability() { return armor_durability; }
     int return_MaxArmordurability() { return max_armor_durability; }
+    int return_weaponPrice() { return weapon_price; }
+    int return_armorPrice() { return armor_price; }
+    int return_weaponDMG() { return weapon_damage; }
+    int return_armorDMG() { return armor_damage; }
+    int return_armorDEF() { return armor_defensiv; }
+    int return_weaponDEF() { return weapon_defense; }
     int return_lifes() { return lifes; }
     void lose_life();
     bool check_lifes();
@@ -45,9 +50,7 @@ public:
     void reduce_armorn_durability();
     Item* unequipWeapon();
     Item* unequipArmor();
-    // void saveGame();
-    // bool loadGame();
-    void clearFile();
+    bool loadGame();
 
     Player() : 
         name("None"),

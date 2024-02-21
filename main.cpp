@@ -4,6 +4,7 @@
 #define NOMINMAX 1
 #include <windows.h>
 #include <random>
+#include <fstream>
 #include <algorithm>
 #include <cmath>
 #include <ctime>
@@ -11,6 +12,37 @@
 #include "entities/Player.h"
 #include "entities/NPC_list.h"
 #include "entities/Smith.h"
+
+void saveGame(Player user) {
+    std::ofstream file("saveGame.txt");
+
+    if (file.is_open()) {
+        file << user.return_username() << std::endl;
+        file << user.return_hp() << " " << user.return_max_hp()<< std::endl;
+        file << user.return_lvl() << " " << user.return_exp() << std::endl;
+        file << user.return_weapon_slot() << std::endl;
+        file << user.return_weaponID() << " " << user.return_weaponPrice() << " " << user.return_Weapondurability() << " " << user.return_MaxWeapondurability() << std::endl;
+        file << user.return_damage() << " " << user.return_weaponDMG() << " " << user.return_armorDMG() << std::endl;
+        file << user.return_armor_slot() << std::endl;
+        file << user.return_armorID() << " " << user.return_armorPrice() << " " << user.return_Armordurability() << " " << user.return_MaxArmordurability() << std::endl;
+        file << user.return_defense() << " " << user.return_armorDEF() << " " << user.return_weaponDEF() << std::endl;
+        file << user.return_gold() << std::endl;
+        file << user.getMagicShieldDuration() << std::endl;
+        file << user.getMagicShieldUses() << std::endl;
+        file << user.getMagicShieldActiv() << std::endl;
+        file << user.return_lifes() << std::endl;
+
+        file.close();
+        std::cout << "Game saved successfully." << std::endl;
+    } else {
+        std::cerr << "Error: Unable to save game data to file." << std::endl;
+    }
+}
+
+void clearFile() {
+    std::ofstream file("saveGame.txt", std::ofstream::out | std::ofstream::trunc);
+    file.close();
+}
 
 void clear_screen() {
     system("cls");
@@ -209,13 +241,13 @@ int main() {
             Sleep(1500);
         // Load game
         } else if (selectedOption  == 2) {
-           // bool x = user.loadGame();
-            // if (x) {
+            bool x = user.loadGame();
+            if (x) {
                 start_screen = false;
                 in_town = true;
                 first_time_healer = false;
                 first_time_smith = false;
-            // }
+            }
             pressEnterToContinue();
         // Quit
         } else if (selectedOption  == 3) {
@@ -1274,8 +1306,8 @@ int main() {
                         }
                     }
                 } else if (selectedOption == 3) {
-                    user.clearFile();
-                    // user.saveGame();
+                    clearFile();
+                    saveGame(user);
                     pressEnterToContinue(); 
                 } else if (selectedOption == 4) {
                     break;
