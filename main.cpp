@@ -42,6 +42,13 @@ void displayStartScreen(int selectedOption) {
     std::cout << (selectedOption == 3 ? "> "  : "  ") << "Quit\n";
 }
 
+void displaySkipProlog(int selectedOption) {
+    clear_screen();
+    std::cout << "\033[4mDo you want to skip the Prolog?\033[0m\n\n";
+    std::cout << (selectedOption == 1 ? "> "  : "  ") << "Yes\n";
+    std::cout << (selectedOption == 2 ? "> "  : "  ") << "No\n";
+}
+
 void displayTownScreen(int selectedOption) {
     clear_screen();
     std::cout << "\033[4mWhere do you want to Travel?\033[0m\n\n";
@@ -180,8 +187,6 @@ int main() {
     int rand_damage;
     int choice;
 
-    inventory.addItem(new Item(0, 'S', "DEV SWORD", 999, 999, 999, 999, 999, 999, 999));
-
     // Start screen
     while (start_screen) {
         do {
@@ -204,9 +209,6 @@ int main() {
         if (selectedOption  == 1) {
             start_screen = false;
             prolog = true;
-            clear_screen();
-            clear_screen(); slow_print(". "); Sleep(500); slow_print(". "); Sleep(500); slow_print(". "); Sleep(500); clear_screen();
-            Sleep(1500);
         // Load game
         } else if (selectedOption  == 2) {
             bool x = user.loadGame();
@@ -225,21 +227,45 @@ int main() {
 
     // prolog
     while (prolog) {
-        clear_screen();
-        slow_print("In the vast expanse of the wilderness, where the sun kisses the treetops and the wind whispers ancient secrets, a lone adventurer trudged through the dense forest.\nClad in worn leather armor that bore the scars of countless battles, he journeyed with a sense of purpose yet unsure of his destination.\n");
-        slow_print("As he ventured deeper into the woods, the shadows grew longer, and the path became obscured by the thick foliage. Lost in thought and direction, \nthe adventurer stumbled upon a clearing where a Rusty Iron Sword lay embedded in the earth, its hilt beckoning to him like an old friend.\n");
-        pressEnterToContinue();
-        clear_screen();
-        slow_print("Just then, a voice resonated from the shadows, breaking the serene atmosphere. 'Halt there, traveler,' it called, 'Before you proceed, I must know your name. What do they call you, brave soul?'\n");
-        slow_print("Startled, the adventurer turned to face the source of the voice, a figure shrouded in mystery.\n");
-        user.set_username();
-        clear_screen();
-        slow_print("'I am "); slow_print(user.return_username()); slow_print("! My purpose is clear: to seek destiny amidst these ancient trees.'\n");
-        slow_print("With a knowing nod, the mysterious figure faded into the shadows, leaving the adventurer to ponder his encounter.\nGrasping the rusty sword with newfound resolve, he pressed on, the rhythmic sound of his footsteps echoing through the silent forest. \nAnd as the canopy parted ways, revealing the distant silhouette of a bustling town on the horizon, a spark of anticipation ignited within his soul.\n");
-        slow_print("With newfound purpose and a Iron Sword at his side, the adventurer set forth towards the welcoming lights of the town,\nready to embark on a new chapter of his journey, where destiny awaited and tales of valor awaited to be written.\n");
-        prolog = false;
-        in_town = true;
-        pressEnterToContinue();
+        do {
+            displaySkipProlog(selectedOption);
+
+            key = _getch();
+
+            switch (key) {
+            case 72:
+                selectedOption = (selectedOption > 1) ? selectedOption - 1 : 2;
+                break;
+            case 80:
+                selectedOption = (selectedOption < 2) ? selectedOption + 1 : 1;
+                break;
+            case 27:
+                return 0;
+            }
+        } while (key != 13);
+        if (selectedOption == 1) {
+            clear_screen();
+            user.set_username();
+            prolog = false;
+            in_town = true;
+        } else {
+            clear_screen(); slow_print(". "); Sleep(500); slow_print(". "); Sleep(500); slow_print(". "); Sleep(1000);
+            clear_screen();
+            slow_print("In the vast expanse of the wilderness, where the sun kisses the treetops and the wind whispers ancient secrets, a lone adventurer trudged through the dense forest.\nClad in worn leather armor that bore the scars of countless battles, he journeyed with a sense of purpose yet unsure of his destination.\n");
+            slow_print("As he ventured deeper into the woods, the shadows grew longer, and the path became obscured by the thick foliage. Lost in thought and direction, \nthe adventurer stumbled upon a clearing where a Rusty Iron Sword lay embedded in the earth, its hilt beckoning to him like an old friend.\n");
+            pressEnterToContinue();
+            clear_screen();
+            slow_print("Just then, a voice resonated from the shadows, breaking the serene atmosphere. 'Halt there, traveler,' it called, 'Before you proceed, I must know your name. What do they call you, brave soul?'\n");
+            slow_print("Startled, the adventurer turned to face the source of the voice, a figure shrouded in mystery.\n");
+            user.set_username();
+            clear_screen();
+            slow_print("'I am "); slow_print(user.return_username()); slow_print("! My purpose is clear: to seek destiny amidst these ancient trees.'\n");
+            slow_print("With a knowing nod, the mysterious figure faded into the shadows, leaving the adventurer to ponder his encounter.\nGrasping the rusty sword with newfound resolve, he pressed on, the rhythmic sound of his footsteps echoing through the silent forest. \nAnd as the canopy parted ways, revealing the distant silhouette of a bustling town on the horizon, a spark of anticipation ignited within his soul.\n");
+            slow_print("With newfound purpose and a Iron Sword at his side, the adventurer set forth towards the welcoming lights of the town,\nready to embark on a new chapter of his journey, where destiny awaited and tales of valor awaited to be written.\n");
+            prolog = false;
+            in_town = true;
+            pressEnterToContinue();
+        }
     }
 
     // in town loop
@@ -1285,5 +1311,3 @@ int main() {
     }
     return 0;
 }
-
-// 2286 Lines of code
